@@ -1,0 +1,41 @@
+/* MovieList.module.css */
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+        flex-direction: column;
+}
+
+.li {
+    list-style: none;
+    margin: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.link {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.poster {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.title {
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+}
