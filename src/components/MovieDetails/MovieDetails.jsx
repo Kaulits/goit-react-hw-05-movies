@@ -4,7 +4,7 @@ import s from './MovieDetails.module.css'
 import { fetchMovieDetails } from 'services/api';
 
 const MovieDetails = () => {
-    // const {params} = useParams();
+
  const { id } = useParams();
 const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
