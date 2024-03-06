@@ -1,9 +1,53 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
+import s from './MovieDetails.module.css'
+import { fetchMovieDetails } from 'services/api';
 
 const MovieDetails = () => {
-  return (
-   <div><nav>
+    // const {params} = useParams();
+ const { id } = useParams();
+const [movies, setMovies] = useState(null);
+  const [error, setError] = useState(null);
+
+    console.log(id)
+    console.log(error)
+    
+  useEffect(() => {
+    fetchMovieDetails(id)
+      .then(data => setMovies(data))
+      .catch(err => setError(err.message));
+  }, [id]);
+
+       if (!movies) {
+        return <h1>Loading...</h1>;
+    }
+
+    
+    return (
+    <div>
+            <Link to='/'>Go back</Link>
+            <div className={s.wrapper}>
+                <img
+                    className={s.poster}
+                    src={movies.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movies.poster_path}`
+                        : `https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-1.jpg`}
+                    alt={movies.title}
+                />
+                <div className={s.about}>
+                    <h2>{movies.title}</h2>
+                    <p>User Score: {(movies.popularity / 100)?.toFixed(0)}%</p>
+                    <h3>Overview</h3>
+                    <p>{movies.overview}</p>
+                    <h3>Genres</h3>
+                    <ul className={s.genrelist}>
+                        {movies.genres?.map(genre => (
+                            <li key={genre.id}>{genre.name}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <nav>
                 <ul>
                     <li>
                         <NavLink to='cast'>Cast</NavLink>
@@ -12,7 +56,9 @@ const MovieDetails = () => {
                         <NavLink to='reviews'>Reviews</NavLink>
                     </li>
                 </ul>
-            </nav></div>  
+            </nav>
+            <Outlet />
+        </div> 
   )
 }
 

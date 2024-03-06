@@ -23,7 +23,7 @@ const [movies, setMovies] = useState(null);
     
   return (
     <div className={s.card}>
-          <ul className={s.list}> {movies?.map(movie => <li className={s.li}><Link to={`/movies`} className={s.link}>
+          <ul className={s.list}> {movies?.map(movie => <li className={s.li}><Link to={`/movies/${movie.id.toString()}`} className={s.link}>
         <img
            src={movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -31,7 +31,7 @@ const [movies, setMovies] = useState(null);
           alt={movie.title}
           className={s.poster}
         />
-        <h2 className={s.title}>{movie.title}</h2>
+        <h2 className={s.title}>{movie.title || 'Default Title'}</h2>
       </Link></li>)}
                 
           </ul>
