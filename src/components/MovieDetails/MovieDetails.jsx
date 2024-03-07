@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
 import s from './MovieDetails.module.css'
 import { fetchMovieDetails } from 'services/api';
+import { useHttp } from 'hook/useHttp';
 
 const MovieDetails = () => {
 
  const { id } = useParams();
-const [movies, setMovies] = useState(null);
-  const [error, setError] = useState(null);
 
-    console.log(id)
-    console.log(error)
+
+    const [movies] = useHttp(fetchMovieDetails, id)
     
-  useEffect(() => {
-    fetchMovieDetails(id)
-      .then(data => setMovies(data))
-      .catch(err => setError(err.message));
-  }, [id]);
+ 
 
        if (!movies) {
         return <h1>Loading...</h1>;

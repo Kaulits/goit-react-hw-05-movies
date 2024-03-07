@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { fetchActors } from 'services/api';
 import s from './Cast.module.css';
+import { useHttp } from 'hook/useHttp';
 
 const Cast = () => {
     const { id } = useParams();
-    const [actors, setActors] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetchActors(id)
-            .then(data => setActors(data))
-            .catch(err => setError(err.message));
-    }, [id]);
+  
+    const [actors] = useHttp(fetchActors, id)
 
     if (!actors) {
         return <h2>Loading...</h2>;
     }
-    console.log(error);
+   
     return (
         <div className={s.wrapper}>
             {actors.map(actor => (

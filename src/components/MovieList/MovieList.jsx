@@ -1,25 +1,17 @@
 
 
-// import { fetchMovies } from 'services/api';
-import { useEffect, useState } from 'react';
 import s from './MovieList.module.css'
 import { Link } from 'react-router-dom';
 import { fetchTrending } from 'services/api';
+import { useHttp } from 'hook/useHttp';
 
 
 
 const MovieList = () => {
  
-const [movies, setMovies] = useState(null);
-  const [error, setError] = useState(null);
+const [movies] = useHttp(fetchTrending)
 
-  useEffect(() => {
-    fetchTrending()
-      .then(data => setMovies(data))
-      .catch(err => setError(err.message));
-  }, []);
-
-    console.log(error)
+   
     
   return (
     <div className={s.card}>

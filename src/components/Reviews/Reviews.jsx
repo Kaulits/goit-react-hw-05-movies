@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import s from './Reviews.module.css';
 import { useParams } from 'react-router-dom';
 import { fetchReviews } from 'services/api';
+import { useHttp } from 'hook/useHttp';
 
 const Reviews = () => {
     const { id } = useParams();
-    const [reviews, setReviews] = useState(null);
-    const [error, setError] = useState(null);
+   
+        const [reviews] = useHttp(fetchReviews, id)
 
-console.log(error)
-
-    useEffect(() => {
-        fetchReviews(id)
-            .then(data => setReviews(data))
-            .catch(err => setError(err.message));
-    }, [id]);
-
-    if (!reviews) {
-        return <h2>Loading...</h2>;
-    }
-
-    // Перевіряємо, чи є відгуки
-    if (reviews.length === 0) {
+    
+    if (!reviews || reviews.length === 0) {
         return <h2>No reviews available.</h2>;
     }
 
