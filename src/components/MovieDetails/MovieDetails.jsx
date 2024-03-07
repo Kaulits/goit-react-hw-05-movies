@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
+import React, { useRef } from 'react'
+import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom'
 import s from './MovieDetails.module.css'
 import { fetchMovieDetails } from 'services/api';
 import { useHttp } from 'hook/useHttp';
@@ -10,7 +10,8 @@ const MovieDetails = () => {
 
 
     const [movies] = useHttp(fetchMovieDetails, id)
-    
+    const location = useLocation()
+     const goBackRef = useRef(location.state?.from || '/');
  
 
        if (!movies) {
@@ -20,7 +21,9 @@ const MovieDetails = () => {
     
     return (
     <div>
-            <Link to='/'>Go back</Link>
+          
+            <Link to={goBackRef.current}> Go back</Link>
+             
             <div className={s.wrapper}>
                 <img
                     className={s.poster}

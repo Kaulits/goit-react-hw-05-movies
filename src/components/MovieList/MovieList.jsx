@@ -1,7 +1,7 @@
 
 
 import s from './MovieList.module.css'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchTrending } from 'services/api';
 import { useHttp } from 'hook/useHttp';
 
@@ -10,12 +10,13 @@ import { useHttp } from 'hook/useHttp';
 const MovieList = () => {
  
 const [movies] = useHttp(fetchTrending)
-
-   
-    
+  const location = useLocation();
+  
   return (
+   
     <div className={s.card}>
-          <ul  className={s.list}> {movies?.map(movie => <li key={movie.id } className={s.li}><Link to={`/movies/${movie.id}`} className={s.link}>
+        
+          <ul  className={s.list}> {movies?.map(movie => <li key={movie.id } className={s.li}><Link   state={{ from: location }} to={`/movies/${movie.id}`} className={s.link}>
         <img
            src={movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
