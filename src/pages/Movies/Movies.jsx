@@ -12,6 +12,8 @@ const Movies = () => {
   const queryParams = useMemo(() => ({ q: query }), [query]);
   const [movies] = useHttp(fetchMovies, queryParams);
 
+console.log(movies)
+    
   return (
     <div>
       <SearchForm setSearchParams={setSearchParams} />
