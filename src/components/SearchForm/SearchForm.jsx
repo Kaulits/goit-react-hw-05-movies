@@ -1,13 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const SearchForm = ({serSearchParams}) => {
+const SearchForm = ({setSearchParams}) => {
  
     const { register, handleSubmit, reset } = useForm();
     const submit = data => {
-        console.log(data)
-        reset()
-        serSearchParams(data.queryStr ? {query: data.queryStr} : {})
+        setSearchParams(data.queryStr ? { query: data.queryStr } : {})
+         reset()
 }
 
 

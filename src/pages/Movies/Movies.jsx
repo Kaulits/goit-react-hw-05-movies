@@ -1,29 +1,23 @@
-import SearchForm from '../../components/SearchForm/SearchForm';
-import React from 'react'
-import { fetchMovies } from 'services/api';
-
-import MovieList from 'components/MovieList/MovieList';
-
+import React, { useMemo } from 'react';
 import { useHttp } from 'hook/useHttp';
 import { useSearchParams } from 'react-router-dom';
+import { fetchMovies } from 'services/api';
+import SearchForm from '../../components/SearchForm/SearchForm';
+import SearchList from '../../components/SearchList/SearchList';
 
 const Movies = () => {
-   
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
 
-    const [searchParams, serSearchParams] = useSearchParams();
-    const query = searchParams.get('query') || ''
-const [movies, setMovies] = useHttp(fetchMovies, query)
+  const queryParams = useMemo(() => ({ q: query }), [query]);
+  const [movies] = useHttp(fetchMovies, queryParams);
+
   return (
     <div>
-       
-          <SearchForm serSearchParams={ serSearchParams} />
-          <ul>{movies?.map(movie => (<MovieList movies={movie} key={movie.id} />))}
-          </ul>
-          
-        
-   </div>
- 
+      <SearchForm setSearchParams={setSearchParams} />
+      <SearchList query={query} /> {/* Передаємо значення query до SearchList */}
+    </div>
   );
 }
 
-export default Movies
+export default Movies;
